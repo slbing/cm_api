@@ -5,6 +5,7 @@
 .classpath
 .project
 .pydevproject
+.settings
 
 # Emacs backup files
 *~

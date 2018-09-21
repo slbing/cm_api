@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 
 import java.text.DateFormat;
@@ -38,9 +39,9 @@ public class ApiObjectMapper extends ObjectMapper {
 
     // Allow JAX-B annotations.
     setAnnotationIntrospector(
-        new AnnotationIntrospector.Pair(
+        AnnotationIntrospector.pair(
             getSerializationConfig().getAnnotationIntrospector(),
-            new JaxbAnnotationIntrospector()));
+            new JaxbAnnotationIntrospector(TypeFactory.defaultInstance())));
 
     // Make Jackson respect @XmlElementWrapper.
     enable(MapperFeature.USE_WRAPPER_NAME_AS_PROPERTY_NAME);
