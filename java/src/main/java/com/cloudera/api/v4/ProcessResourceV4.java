@@ -15,10 +15,9 @@
 // limitations under the License.
 package com.cloudera.api.v4;
 
-import com.cloudera.api.model.ApiProcess;
+import static com.cloudera.api.Parameters.CONFIG_FILE_NAME;
 
-import java.io.IOException;
-
+import javax.activation.DataSource;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -26,32 +25,30 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.apache.cxf.jaxrs.ext.multipart.InputStreamDataSource;
+import com.cloudera.api.model.ApiProcess;
 
-import static com.cloudera.api.Parameters.CONFIG_FILE_NAME;
-
-@Consumes({ MediaType.APPLICATION_JSON })
-@Produces({ MediaType.APPLICATION_JSON })
+@Consumes({MediaType.APPLICATION_JSON})
+@Produces({MediaType.APPLICATION_JSON})
 public interface ProcessResourceV4 {
-
+  
   /**
    * @return The process associated with this resource.
    */
   @GET
   @Path("/")
   public ApiProcess getProcess();
-
+  
   /**
-   * Returns the contents of the specified config file.
-   * A multi-level file name (e.g. hadoop-conf/hdfs-site.xml) is
-   * acceptable here.
+   * Returns the contents of the specified config file. A multi-level file name
+   * (e.g. hadoop-conf/hdfs-site.xml) is acceptable here.
    *
-   * @param configFileName Name of the config file to get.
+   * @param configFileName
+   *          Name of the config file to get.
    * @return Contents of the specified config file
    */
   @GET
   @Path("/configFiles/{configFileName : .*}")
   @Produces(MediaType.APPLICATION_OCTET_STREAM)
-  public InputStreamDataSource getConfigFile(
+  public DataSource getConfigFile(
       @PathParam(CONFIG_FILE_NAME) String configFileName);
 }

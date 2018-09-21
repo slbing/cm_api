@@ -112,28 +112,6 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.9</version>
-        <executions>
-          <execution>
-            <id>attach-javadocs</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <additionalparam>${javadocOptions}</additionalparam>
-          <docfilessubdirs>true</docfilessubdirs>
-          <outputDirectory>${project.build.directory}/javadoc</outputDirectory>
-          <overview>${basedir}/src/javadoc/overview.html</overview>
-          <doctitle>Cloudera Manager API (${project.version})</doctitle>
-          <windowtitle>Cloudera Manager API (${project.version})</windowtitle>
-          <bottom>Copyright &#169; Cloudera, Inc. Released under Apache License, Version 2.0.</bottom>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
         <version>2.2.1</version>
         <executions>

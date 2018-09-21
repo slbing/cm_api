@@ -18,6 +18,7 @@ package com.cloudera.api.v2;
 
 import static com.cloudera.api.Parameters.SERVICE_NAME;
 
+import javax.activation.DataSource;
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -48,7 +49,7 @@ public interface ServicesResourceV2 extends ServicesResource {
   @PermitAll
   @Path("/{serviceName}/clientConfig")
   @Produces(MediaType.APPLICATION_OCTET_STREAM)
-  public InputStreamDataSource getClientConfig(
+  public DataSource getClientConfig(
       @PathParam(SERVICE_NAME) String serviceName);
 
   /**
