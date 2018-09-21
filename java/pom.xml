@@ -9,7 +9,7 @@
   <version>5.15.0-maple-SNAPSHOT</version>
 
   <properties>
-    <cxf.version>2.7.7</cxf.version>
+    <cxf.version>3.2.6</cxf.version>
     <guava.version>14.0</guava.version>
     <jackson2.version>2.9.4</jackson2.version>
     <joda.version>2.1</joda.version>
@@ -33,121 +33,6 @@
     </snapshotRepository>
   </distributionManagement>
 
-  <profiles>
-    <profile>
-      <id>jdk8</id>
-      <activation>
-        <jdk>1.8</jdk>
-      </activation>
-      <properties>
-        <javadocOptions>-Xdoclint:none</javadocOptions>
-        <findbugsVersion>3.0.0</findbugsVersion>
-      </properties>
-      <!-- Enunciate doesn't work with Java 8. -->
-    </profile>
-    <profile>
-      <id>jdk7</id>
-      <activation>
-        <jdk>1.7</jdk>
-      </activation>
-      <properties>
-        <findbugsVersion>3.0.0</findbugsVersion>
-      </properties>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.enunciate</groupId>
-            <artifactId>maven-enunciate-cxf-plugin</artifactId>
-            <version>1.27</version>
-            <configuration>
-              <configFile>enunciate.xml</configFile>
-              <docsDir>${project.build.directory}/classes/restapi</docsDir>
-              <enunciateArtifactId>Cloudera Manager API Docs</enunciateArtifactId>
-            </configuration>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>docs</goal>
-                </goals>
-                <phase>package</phase>
-              </execution>
-            </executions>
-            <dependencies>
-              <dependency>
-                <groupId>com.sun</groupId>
-                <artifactId>tools</artifactId>
-                <version>${java.version}</version>
-                <scope>system</scope>
-                <systemPath>${java.home}/../lib/tools.jar</systemPath>
-              </dependency>
-            </dependencies>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>jdk6</id>
-      <activation>
-        <jdk>1.6</jdk>
-      </activation>
-      <properties>
-        <findbugsVersion>2.5.2</findbugsVersion>
-      </properties>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.enunciate</groupId>
-            <artifactId>maven-enunciate-cxf-plugin</artifactId>
-            <version>1.27</version>
-            <configuration>
-              <configFile>enunciate.xml</configFile>
-              <docsDir>${project.build.directory}/classes/restapi</docsDir>
-              <enunciateArtifactId>Cloudera Manager API Docs</enunciateArtifactId>
-            </configuration>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>docs</goal>
-                </goals>
-                <phase>package</phase>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <!-- profile to use with Atlassian Clover for code coverage -->
-      <id>clover</id>
-      <properties>
-        <clover.version>4.0.3</clover.version>
-        <clover.generateHtml>true</clover.generateHtml>
-        <clover.generateXml>true</clover.generateXml>
-      </properties>
-      <dependencies>
-        <dependency>
-          <groupId>com.atlassian.clover</groupId>
-          <artifactId>clover</artifactId>
-          <version>${clover.version}</version>
-        </dependency>
-      </dependencies>
-      <build>
-        <plugins>
-          <plugin>
-            <!-- Clover plugin to enable maven to create instantiated jars that will record code coverage -->
-            <groupId>com.atlassian.maven.plugins</groupId>
-            <artifactId>maven-clover2-plugin</artifactId>
-            <version>${clover.version}</version>
-            <configuration>
-              <generateHtml>${clover.generateHtml}</generateHtml>
-              <generateXml>${clover.generateXml}</generateXml>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
-
   <build>
     <plugins>
       <plugin>
@@ -156,8 +41,8 @@
         <version>2.3.2</version>
         <configuration>
           <compilerArgument>-Xlint</compilerArgument>
-          <source>1.6</source>
-          <target>1.6</target>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
       <plugin>
@@ -261,14 +146,6 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>findbugs-maven-plugin</artifactId>
-        <version>${findbugsVersion}</version>
-        <configuration>
-          <excludeFilterFile>findbugs-exclude.xml</excludeFilterFile>
-        </configuration>
-      </plugin>
-      <plugin>
         <groupId>org.owasp</groupId>
         <artifactId>dependency-check-maven</artifactId>
         <version>1.4.3</version>
@@ -306,6 +183,12 @@
       <artifactId>cxf-rt-frontend-jaxrs</artifactId>
       <version>${cxf.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-rs-client</artifactId>
+      <version>${cxf.version}</version>
+    </dependency>
+    
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
